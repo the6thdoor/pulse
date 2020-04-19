@@ -17,6 +17,7 @@ kotlin {
     val commonMain by getting {
       dependencies {
         implementation(kotlin("stdlib-common"))
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.5-1.4-M1")
       }
     }
     val commonTest by getting {
@@ -29,6 +30,7 @@ kotlin {
     jvm().compilations["main"].defaultSourceSet {
       dependencies {
         implementation(kotlin("stdlib-jdk8"))
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5-1.4-M1")
       }
     }
 
@@ -38,7 +40,32 @@ kotlin {
       }
     }
 
-    linuxX64("linux").compilations["main"].defaultSourceSet {}
+    js().compilations["main"].defaultSourceSet {
+      dependencies {
+        implementation(kotlin("stdlib-js"))
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.3.5-1.4-M1")
+      }
+    }
+
+    js().compilations["test"].defaultSourceSet {
+      dependencies {
+        implementation(kotlin("test-js"))
+      }
+    }
+
+    linuxX64("linux").compilations["main"].defaultSourceSet {
+      dependencies {
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.3.5-1.4-M1")
+      }
+    }
     linuxX64("linux").compilations["test"].defaultSourceSet {}
+
+    linuxX64("linux") {
+      binaries {
+        executable {
+          entryPoint = "org.pulse.core.main"
+        }
+      }
+    }
   }
 }
